@@ -1,0 +1,109 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+struct node
+{
+    char  name[50];
+	char pc[10];
+	struct node* next;
+};
+struct node* head=NULL,*temp,*newnode,*del,*pass;
+void ADD(struct node* newnode)
+{
+	if(head==NULL)
+	{	
+		head=newnode;
+		temp=newnode;
+	}
+	else
+	{
+	temp->next=newnode;
+	temp=newnode;	
+	temp->next=NULL;
+	}
+}
+void DEL()
+{	temp=del=pass=head;
+
+
+if((temp->next!=NULL)&&(*temp->pc==80))
+{
+head=head->next;
+temp=head;	
+}
+if((temp->next==NULL)&&(*temp->pc==80))
+free(pass);
+while(temp->next!=NULL)
+{
+	if(*temp->pc!=80)
+		{
+			del=temp;
+			temp=pass=temp->next;
+				
+		}
+else
+		{
+			del->next=temp->next;
+			del=temp->next;
+			temp=del->next;
+			free(pass);
+					
+		}		
+}
+if(temp->next==NULL)
+{
+del->next=NULL;
+free(pass);
+}
+}
+
+void DISPLAY ()
+{
+	temp=head;
+	printf("%s",temp->name);
+	while(temp->next!=NULL)
+	{
+		temp=temp->next;
+	printf("%s",temp->name);
+	
+	}
+	
+}
+int main()
+{
+	int N,M,i=1,opt,flag=0;
+   	printf("enter the number of minutes the podcast runs");
+	scanf("%d",&N);
+	printf("enter the number of operations");
+	scanf("%d",&M);
+	while(i<=M)
+	{
+	printf("enter operation 1.ADD 2.DEL 3.DISPLAY");
+		scanf("%d",&opt);
+		if(opt==1)
+		{
+			if(flag<N)
+			{
+			newnode=(struct node*)(malloc(sizeof(struct node)));
+			printf("enter country name and NP/P");
+			scanf("%s%s",&newnode->name,&newnode->pc);
+			newnode->next=NULL;
+			ADD(newnode);
+			flag++;
+		
+		    }
+		    else
+		    printf("no more add operations");
+		}
+		else if(opt==2)
+		{
+			DEL();
+	    } 
+	    else if(opt==3)
+	    {
+	    	DISPLAY();
+		}
+	i++;	
+	}
+	return 0;
+}
